@@ -13,7 +13,7 @@
         const FPS = 30; //frames per second
         const FRICTION = 0.7; // friction coefficient of space (0 = no friction, 1 = lots of friction)
         const ROIDS_JAG = 0.4; //jaggedness of the asteroids (0 = none, 1 = lots)
-        const ROIDS_NUM = 3; // starting number of asteroids
+        const ROIDS_NUM = 5; // starting number of asteroids
         const ROIDS_SIZE = 100; // starting size of asteroids in pxls
         const ROIDS_SPD = 50; // max starting speed of asteroids in pxls per second.
         const ROIDS_VERT = 10; // average number of vertices on each asteroid
@@ -56,8 +56,8 @@
            let x, y; 
            for (var i = 0; i < ROIDS_NUM; i++){
                do {
-               x = Math.floor(Math.random() * canv.width);
-               y = Math.floor(Math.random() * canv.height);
+                   x = Math.floor(Math.random() * canv.width);
+                   y = Math.floor(Math.random() * canv.height);
                } while (distBetweenPoints(ship.x, ship.y, x, y) < ROIDS_SIZE * 2 + ship.r);
                roids.push(newAsteroid(x, y));
            } 
@@ -112,9 +112,8 @@
 
             // create the vertes offset array
             for (var i = 0; i < roid.vert; i++) {
-            roids.offs.push(Math.random() * ROIDS_JAG * 2 + 1 - ROIDS_JAG);
+                roid.offs.push(Math.random() * ROIDS_JAG * 2 + 1 - ROIDS_JAG);
             }
-
             
             return roid;
         }
@@ -207,8 +206,19 @@
                 ctx.stroke();
                 
                 // move the asteroid
-
+                roids[i].x += roids[i].xv;
+                roids[i].y += roids[i].yv;
                 //handle edge of screen
+                if (roids[i].x < 0 - roids[i].r) {
+                    roids[i].x = canv.width + roids[i].r;
+                } else if (roids[i].x > canv.width + roids[i].r) {
+                    roids[i].x = 0 - roids[i].r
+                }
+                if (roids[i].y < 0 - roids[i].r) {
+                    roids[i].y = canv.height + roids[i].r;
+                } else if (roids[i].y > canv.height + roids[i].r) {
+                    roids[i].y = 0 - roids[i].r
+                }
             }
 
             
